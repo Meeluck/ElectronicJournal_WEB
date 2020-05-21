@@ -1,0 +1,30 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+    <link href="~/css/site.css" rel="stylesheet" />
+</head>
+<body>
+    <header>
+        <a asp-controller="home" asp-action="index">Расписание</a>
+        <a asp-controller="home" asp-action="catalog">Успеваемость групп</a>
+        <a asp-controller="home" asp-action="cc">Учет успеваемости</a>
+    </header>
+    <div id="main">
+        @RenderBody()
+    </div>
+    @* IsSectionDefined - позволяет проверить наличие секции в представлении, и вывести альтернативную разметку. *@
+    @if (IsSectionDefined("Footer"))
+    {
+        @RenderSection("Footer")
+    }
+    else
+    {
+    }
+</body>
+</html>

@@ -1,0 +1,49 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Авторизация</title>
+</head>
+<body>
+    <div>
+        @using (Html.BeginForm("Authorization", "Authorization", FormMethod.Post))
+         {
+            <table>
+                <caption>Авторизация</caption>
+                <tbody>
+                    <tr>
+                        <td>
+                            <lable><b>Логин</b></lable>
+                        </td> 
+                        <td>
+                            <input type="text"  placeholder="введите логин" autocomplete="off" name="login" required/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label><b>Пароль</b></label>
+                        </td>
+                        <td>
+                            <input type="password" placeholder="введите пароль" name="password" required>
+                        </td>
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th colspan="3">
+                            <button type="submit">Войти</button>
+                        </th>
+                    </tr>
+                
+                </tfoot>
+            </table>
+         }
+    </div>
+</body>
+</html>
