@@ -1,4 +1,5 @@
-﻿
+﻿@using ElectronicJournal_WEB.Models.ViewModel
+@model IEnumerable<IndexTeacherViewModel>
 @{
     Layout = "_LayoutTeacher";
 }
@@ -6,5 +7,27 @@
 <!DOCTYPE html>
 
 <div>
-    <p>Hello Teacher</p>
+    <h2>Расписание предстоящих занятий</h2>
+
+    <table border="1">
+        <tr>
+            <th><b>Предмет</b></th>
+            <th><b>Тип занятия</b></th>
+            <th><b>Группа</b></th>
+            <th><b>Дата занятия</b></th>
+            <th><b>Время занятия</b></th>
+            <th><b>Аудитория</b></th>
+        </tr>
+        @foreach (IndexTeacherViewModel p in Model)
+        {
+        <tr>
+            <td>@p.SubjectName</td>
+            <td>@p.LessonType</td>
+            <td>@p.GroupName</td>
+            <td>@p.LessonDate</td>
+            <td>@p.LessonTime</td>
+            <td>@p.ClassroomName</td>
+        </tr>
+        }
+    </table>
 </div>

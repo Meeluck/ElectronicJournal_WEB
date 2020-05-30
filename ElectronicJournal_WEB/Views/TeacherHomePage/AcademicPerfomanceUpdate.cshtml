@@ -1,0 +1,38 @@
+﻿@using ElectronicJournal_WEB.Models.ViewModel
+@model List<StudentsPerfomanceViewModel>
+@{
+    ViewData["Title"] = "AcademicPerfomance";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+
+<h3>Оценивание занятия по @ViewBag.SubjectName гр. @ViewBag.GroupName за @ViewBag.Date</h3>
+
+<div>
+    <table border="1">
+        <tr>
+            <td><b>ФИО студента</b></td>
+            <td><b>Вычтавленная ранее оценка</b></td>
+            <td><b>Оценка</b></td>
+        </tr>
+        @using (Html.BeginForm("AcademicPerfomanceUpdate", "TeacherHomePage",FormMethod.Post))
+        {
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <tr>
+                    <td>@Model[i].FullName</td>
+                    <td>@Model[i].Mark</td>
+                    <td>
+                        @Html.DropDownListFor(m => m[i].Mark, ViewBag.Marks as SelectList)
+                    </td>
+                    <td style="display:none;">@Html.HiddenFor(m => m[i].UserId)</td>
+                    <td style="display:none;">@Html.HiddenFor(m => m[i].LessonId)</td>
+                    <td style="display:none;">@Html.HiddenFor(m => m[i].AcademicPerformanceId)</td>
+                </tr>
+            }
+            <tr>
+                <td> <button type="submit">Обновить</button></td>
+            </tr>
+        }
+        </table>
+
+</div>

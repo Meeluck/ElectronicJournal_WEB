@@ -1,0 +1,27 @@
+﻿@using ElectronicJournal_WEB.Models.DatabaseModel
+@model IEnumerable<Groups>
+
+@{
+    ViewData["Title"] = "StudentAssessment";
+    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+}
+
+<div>
+    <p>Выберите группу</p>
+    <table border="1">
+        <tr>
+            <th>Группа &nbsp;&nbsp;&nbsp;</th>
+        </tr>
+        @foreach (Groups item in Model)
+        {
+            <tr>
+                <td><p>@item.GroupName</p></td>
+                <td>
+                    <input type="submit" value="Выбрать"
+                           onclick='location.href="GroupsLessons/@item.GroupId"' />
+                </td>
+            </tr>
+        }
+    </table>
+</div>
+

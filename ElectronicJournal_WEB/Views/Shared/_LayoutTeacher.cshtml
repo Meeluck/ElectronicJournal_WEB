@@ -11,9 +11,10 @@
 </head>
 <body>
     <header>
-        <a asp-controller="home" asp-action="index">Расписание</a>
+        <a><b>Электронный журнал</b></a>
+        <a asp-controller="TeacherHomePage" asp-action="index">Расписание</a>
         <a asp-controller="home" asp-action="catalog">Успеваемость групп</a>
-        <a asp-controller="home" asp-action="cc">Учет успеваемости</a>
+        <a asp-controller="TeacherHomePage" asp-action="StudentAssessment">Учет успеваемости</a>
     </header>
     <div id="main">
         @RenderBody()

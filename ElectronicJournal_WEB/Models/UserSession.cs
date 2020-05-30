@@ -52,18 +52,10 @@ namespace ElectronicJournal_WEB.Models
 				return _userSession;
 			}
 		}
-		public static string GetName
-		{
-			get { return _userFullName; }
-		}
-		public static string AccessLevelName
-		{
-			get { return _accessLevelName; }
-		}
-		public static int AccessLevelId
-		{
-			get { return _accessLevelId; }
-		}
+		public static int GetUserId => _userId;
+		public static string GetName => _userFullName;
+		public static string AccessLevelName => _accessLevelName;
+		public static int AccessLevelId => _accessLevelId;
 
 	}
 }

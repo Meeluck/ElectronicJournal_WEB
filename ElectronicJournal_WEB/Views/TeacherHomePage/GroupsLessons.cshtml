@@ -1,0 +1,33 @@
+﻿@using ElectronicJournal_WEB.Models.ViewModel
+@model IEnumerable<IndexTeacherViewModel>
+@{
+    Layout = "_LayoutTeacher";
+}
+
+<!DOCTYPE html>
+
+<div>
+    <h2>Проведенные занятия</h2>
+
+    <table border="1" style="margin:5px">
+        <tr>
+            <th><b>Предмет</b></th>
+            <th><b>Тип занятия</b></th>
+            <th><b>Группа</b></th>
+            <th><b>Дата занятия</b></th>
+        </tr>
+        @foreach (IndexTeacherViewModel item in Model)
+        {
+            <tr>
+                <td>@item.SubjectName</td>
+                <td>@item.LessonType</td>
+                <td>@item.GroupName</td>
+                <td>@item.LessonDate</td>
+                <td>
+                    <input type="submit" value="Оценить"
+                           onclick='location.href="/TeacherHomePage/AcademicPerfomance/@item.LessonId"'/>
+                </td>
+            </tr>
+        }
+    </table>
+</div>
