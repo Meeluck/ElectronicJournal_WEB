@@ -227,5 +227,98 @@ namespace ElectronicJournal_WEB.Controllers
             db.SaveChanges();
             return new RedirectToActionResult("StudentAssessment", "TeacherHomePage", null);
         }
+
+
+        //Выбор групп у которых ведет преподаватель 
+        public IActionResult GroupPerformance()
+        {
+            List<Groups> groups = new List<Groups>();
+            groups = (from tch in db.Teachers
+                      join tc_ls in db.TeacherLessons on tch.TeacherId equals tc_ls.TeacherId
+                      into tc_lsDatails
+                      from tc_lsDat in tc_lsDatails.DefaultIfEmpty()
+                      join ls in db.Lessons on tc_lsDat.LessonId equals ls.LessonId
+                      into lsDatails
+                      from lsDat in lsDatails.DefaultIfEmpty()
+                      join gr_ls in db.GroupLessons on lsDat.LessonId equals gr_ls.LessonId
+                      join gr in db.Groups on gr_ls.GroupId equals gr.GroupId
+                      select new Groups
+                      {
+                          GroupId = gr.GroupId,
+                          GroupName = gr.GroupName,
+                          YearFormationGroup = gr.YearFormationGroup
+                      }).Distinct().ToList();
+
+            return View(groups);
+        }
+
+        public IActionResult SelectSubject(int id)
+        {
+            //id - GroupId
+            //список предеметов, которые ведет преподаватель у группы
+            List<SelectedSubjectViewModel> subjects = (from tc in db.Teachers
+                                                       join tc_ls in db.TeacherLessons on tc.TeacherId equals tc_ls.TeacherId
+                                                       join ls in db.Lessons on tc_ls.LessonId equals ls.LessonId
+                                                       join sb in db.Subjects on ls.SubjectId equals sb.SubjectId
+                                                       join gr_ls in db.GroupLessons on ls.LessonId equals gr_ls.LessonId
+                                                       join gr in db.Groups on gr_ls.GroupId equals gr.GroupId
+                                                       where tc.UserId == UserSession.GetUserId
+                                                       where gr.GroupId == id
+                                                       select new SelectedSubjectViewModel
+                                                       {
+                                                           SubjectId = sb.SubjectId,
+                                                           SubjectName = sb.SubjectName,
+                                                           GroupId = gr.GroupId,
+                                                       }).Distinct().ToList();
+            return View(subjects);
+        }
+
+        [HttpPost]
+        public IActionResult DetailGroupPerformance(SelectedSubjectViewModel subject)
+        {
+            List<StudentsPerfonamsViemModel> studentPerfonams = new List<StudentsPerfonamsViemModel>();
+            
+            ViewBag.SubjectName = db.Subjects.Find(subject.SubjectId).SubjectName;
+            ViewBag.GroupName = db.Groups.Find(subject.GroupId).GroupName;
+
+            var studnetGroupd = from gr in db.Groups
+                                join st_gr in db.StudentGroups on gr.GroupId equals st_gr.GroupId
+                                join us in db.Users on st_gr.UserId equals us.UserId
+                                where gr.GroupId == subject.GroupId
+                                select new
+                                {
+                                    UserId = us.UserId,
+                                    FullName = us.LastName + " " + us.FirstName + (string.IsNullOrEmpty(us.MiddleName) ? string.Empty : us.MiddleName)
+                                };
+            foreach (var item in studnetGroupd)
+            {
+                studentPerfonams.Add(new StudentsPerfonamsViemModel
+                {
+                    UserId = item.UserId,
+                    FullName = item.FullName,
+                    Marks = new List<MarksDate>()
+                });
+            }
+
+            foreach (StudentsPerfonamsViemModel item in studentPerfonams)
+            {
+                item.Marks = (from ls in db.Lessons
+                              join lt in db.LessonTypes on ls.LessonTypeId equals lt.LessonTypeId
+                              into ltDatail
+                              from ltDat in ltDatail.DefaultIfEmpty()
+                              join ap in db.AcademicPerformances on ls.LessonId equals ap.LessonId
+                              where ls.SubjectId == subject.SubjectId
+                              where ap.UserId == item.UserId
+                              select new MarksDate
+                              {
+                                  Date = ls.Date.ToShortDateString(),
+                                  Mark = ap.Mark,
+                                  LessonsType = ltDat.LessonTypeName
+                              }).ToList();
+            }
+
+            return View(studentPerfonams);
+        }
+
     }
 }
