@@ -26,9 +26,13 @@
                     <td style="display:none;">@Html.HiddenFor(m => m[i].LessonId)</td>
                 </tr>
             }
-        <tr>
-            <td> <button type="submit">Оценить</button></td>
-        </tr>
-            }
-        </table>
+            <tr>
+                <td>Заметка к занятию</td>
+                <td>@Html.TextArea("note", ViewData)</td>
+            </tr>
+            <tr>
+                <td> <button type="submit">Оценить</button></td>
+            </tr>
+        }
+    </table>
 </div>

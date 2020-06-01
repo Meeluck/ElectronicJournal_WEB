@@ -184,17 +184,20 @@ namespace ElectronicJournal_WEB.Controllers
                                                  + (string.IsNullOrEmpty(us.MiddleName) ? string.Empty : us.MiddleName),
                                       Mark = ap.Mark
                                   }).ToList();
+                ViewData["Note"] = (db.Lessons.Find(id)).Notes;
                 return View("AcademicPerfomanceUpdate",studentsGroups);
             }
         }
 
         [HttpPost]
-        public IActionResult AcademicPerfomance(List<StudentsPerfomanceViewModel> studentPerfomance)
+        public IActionResult AcademicPerfomance(List<StudentsPerfomanceViewModel> studentPerfomance, string note)
         {
             List<AcademicPerformances> assessments = new List<AcademicPerformances>();
-
+            Lessons lessonUpdate;
+            int lessonId = 0;
             foreach(StudentsPerfomanceViewModel item in studentPerfomance)
             {
+                lessonId = item.LessonId;
                 assessments.Add(new AcademicPerformances
                 {
                     UserId = item.UserId,
@@ -202,19 +205,26 @@ namespace ElectronicJournal_WEB.Controllers
                     Mark = item.Mark
                 });
             }
+            lessonUpdate = db.Lessons.Find(lessonId);
+            lessonUpdate.Notes = note;
+
             db.AcademicPerformances.AddRange(assessments);
+            db.Lessons.Update(lessonUpdate);
             db.SaveChanges();
 
             return new RedirectToActionResult("StudentAssessment", "TeacherHomePage", null);
         }
 
         [HttpPost]
-        public IActionResult AcademicPerfomanceUpdate(List<StudentsPerfomanceViewModel> studentsPerfomances)
+        public IActionResult AcademicPerfomanceUpdate(List<StudentsPerfomanceViewModel> studentsPerfomances, string note)
         {
             List<AcademicPerformances> assessments = new List<AcademicPerformances>();
+            Lessons lessonUpdate;
+            int lessonId = 0;
 
             foreach (StudentsPerfomanceViewModel item in studentsPerfomances)
             {
+                lessonId = item.LessonId;
                 assessments.Add(new AcademicPerformances
                 {
                     AcademicPerformanceId = item.AcademicPerformanceId,
@@ -223,6 +233,10 @@ namespace ElectronicJournal_WEB.Controllers
                     Mark = item.Mark
                 });
             }
+
+            lessonUpdate = db.Lessons.Find(lessonId);
+            lessonUpdate.Notes = note;
+
             db.AcademicPerformances.UpdateRange(assessments);
             db.SaveChanges();
             return new RedirectToActionResult("StudentAssessment", "TeacherHomePage", null);
