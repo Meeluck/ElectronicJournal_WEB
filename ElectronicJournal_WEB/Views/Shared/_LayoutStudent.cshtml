@@ -11,11 +11,12 @@
 </head>
 <body>
     <header>
-        <a asp-controller="home" asp-action="index">Расписание</a>
-        <a asp-controller="home" asp-action="catalog">Успеваемость</a>
+        <a><b>Электронный журнал</b></a>
+        <a asp-controller="StudentHomePage" asp-action="index">Расписание</a>
+        <a asp-controller="StudentHomePage" asp-action="StudentPerfomance">Успеваемость</a>
         @if (ViewBag.AccessLevelId == 2)
         {
-        <a asp-controller="home" asp-action="catalog">Успеваемость группы</a>
+            <a asp-controller="StudentHomePage" asp-action="SubjectSelection">Успеваемость группы</a>
         }
     </header>
     <div id="main">

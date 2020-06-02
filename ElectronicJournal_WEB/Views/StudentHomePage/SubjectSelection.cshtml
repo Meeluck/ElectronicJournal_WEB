@@ -1,0 +1,25 @@
+﻿@model IEnumerable<ElectronicJournal_WEB.Models.DatabaseModel.Subjects>
+
+@{
+    ViewData["Title"] = "SubjectSelection";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+
+<h3>Выберите предмет</h3>
+
+<table border="1">
+    <tr>
+        <th><b>Предметы</b></th>
+    </tr>
+    @foreach (ElectronicJournal_WEB.Models.DatabaseModel.Subjects item in Model)
+    {
+        <tr>
+            <td><p>@item.SubjectName</p></td>
+            <td>
+                <input type="submit" value="Выбрать"
+                       onclick='location.href="GroupPerfomance/@item.SubjectId"' />
+            </td>
+        </tr>
+    }
+</table>

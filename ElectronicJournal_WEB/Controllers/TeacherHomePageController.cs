@@ -290,7 +290,7 @@ namespace ElectronicJournal_WEB.Controllers
         [HttpPost]
         public IActionResult DetailGroupPerformance(SelectedSubjectViewModel subject)
         {
-            List<StudentsPerfonamsViemModel> studentPerfonams = new List<StudentsPerfonamsViemModel>();
+            List<StudentsPerfomancesViemModel> studentPerfonams = new List<StudentsPerfomancesViemModel>();
             
             ViewBag.SubjectName = db.Subjects.Find(subject.SubjectId).SubjectName;
             ViewBag.GroupName = db.Groups.Find(subject.GroupId).GroupName;
@@ -306,7 +306,7 @@ namespace ElectronicJournal_WEB.Controllers
                                 };
             foreach (var item in studnetGroupd)
             {
-                studentPerfonams.Add(new StudentsPerfonamsViemModel
+                studentPerfonams.Add(new StudentsPerfomancesViemModel
                 {
                     UserId = item.UserId,
                     FullName = item.FullName,
@@ -314,7 +314,7 @@ namespace ElectronicJournal_WEB.Controllers
                 });
             }
 
-            foreach (StudentsPerfonamsViemModel item in studentPerfonams)
+            foreach (StudentsPerfomancesViemModel item in studentPerfonams)
             {
                 item.Marks = (from ls in db.Lessons
                               join lt in db.LessonTypes on ls.LessonTypeId equals lt.LessonTypeId

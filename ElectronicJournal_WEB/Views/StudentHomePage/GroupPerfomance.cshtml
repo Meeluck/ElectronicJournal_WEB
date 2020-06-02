@@ -2,8 +2,8 @@
 @model List<StudentsPerfomancesViemModel>
 
 @{
-    ViewData["Title"] = "DetailGroupPerformance";
-    Layout = "~/Views/Shared/_LayoutTeacher.cshtml";
+    ViewData["Title"] = "GroupPerfomance";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
 }
 
 <h3>Успеваемость студентов группы @ViewBag.GroupName по @ViewBag.SubjectName</h3>
@@ -19,10 +19,10 @@
                 {
                     <th>
                         @Model[i].Marks[j].Date
-                        <br/>@Model[i].Marks[j].LessonsType
+                        <br />@Model[i].Marks[j].LessonsType
                     </th>
                 }
-            <tr/>
+            <tr />
             <tr>
                 <td>@Model[i].FullName</td>
                 @for (int j = 0; j < Model[i].Marks.Count; j++)
@@ -33,5 +33,6 @@
         </table>
     </div>
 }
+
 
 

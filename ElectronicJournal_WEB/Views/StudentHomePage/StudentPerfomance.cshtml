@@ -1,0 +1,40 @@
+﻿@using ElectronicJournal_WEB.Models.ViewModel
+@model List<PerfomancesViewModel>
+
+@{
+    ViewData["Title"] = "StudentPerfomance";
+    Layout = "~/Views/Shared/_LayoutStudent.cshtml";
+}
+
+<h3>Личная успеваемость</h3>
+
+<table border="1">
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <tr>
+            <th>Предмет</th>
+            @for (int j = 0; j < Model[i].Marks.Count; j++)
+            {
+                <th>
+                    @Model[i].Marks[j].Date
+                    <br />@Model[i].Marks[j].LessonsType
+                </th>
+            }
+        </tr>
+        <tr>
+            <td>@Model[i].SubjectName</td>
+            @for (int j = 0; j < Model[i].Marks.Count; j++)
+            {
+                <td>@Model[i].Marks[j].Mark</td>
+            }
+        </tr>
+        <tr>
+            <td>Комментарий к занятию</td>
+            @for (int j = 0; j < Model[i].Marks.Count; j++)
+            {
+                <td>@Model[i].Marks[j].Note</td>
+            }
+        </tr>
+    }
+
+</table>

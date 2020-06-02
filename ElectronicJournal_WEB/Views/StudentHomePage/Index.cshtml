@@ -1,8 +1,29 @@
-﻿
+﻿@using ElectronicJournal_WEB.Models.ViewModel
+@model List<StudentScheldueViewModel>
 @{
     Layout = "_LayoutStudent";
 }
 
-<div>
-    <p>Hello student</p>
-</div>
+<h3>Расписание пар</h3>
+<table border="1">
+    <tr>
+        <th><b>Предмет</b></th>
+        <th><b>Тип занятия</b></th>
+        <th><b>Преподаватель</b></th>
+        <th><b>Дата занятия</b></th>
+        <th><b>Время</b></th>
+        <th><b>Аудитория</b></th>
+    </tr>
+    
+    @foreach(StudentScheldueViewModel item in Model)
+    {
+        <tr>
+            <td>@item.SubjectName</td>
+            <td>@item.LessonType</td>
+            <td>@item.TeacherName</td>
+            <td>@item.Data</td>
+            <td>@item.Time</td>
+            <td>@item.ClassroomName</td>
+        </tr>
+    }
+</table>
