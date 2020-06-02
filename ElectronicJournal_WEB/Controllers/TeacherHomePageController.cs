@@ -50,7 +50,7 @@ namespace ElectronicJournal_WEB.Controllers
                           join gr_ls in db.GroupLessons on lsDat.LessonId equals gr_ls.LessonId
                           join gr in db.Groups on gr_ls.GroupId equals gr.GroupId
                           where tch.UserId == UserSession.GetUserId
-                          where lsDat.Date > DateTime.Today
+                          where lsDat.Date >= DateTime.Today
                           orderby lsDat.Date
                           select new IndexTeacherViewModel
                           {

@@ -33,20 +33,4 @@ namespace ElectronicJournal_WEB.Models.ViewModel
 		public string Note { get; set; }
 	}
 
-	public class GroupPerfomanceViewModel
-	{
-		public int GroupId { get; set; }
-		public int SubjectId { get; set; }
-		public string SubjectName { get; set; }
-		public List<StudentsPerfomancesUpdateViemModel> Perfomances { get; set; }
-	}
-	public class StudentsPerfomancesUpdateViemModel
-	{
-		public int UserId { get; set; }
-		public string FullName { get; set; }
-		public DateTime Date { get; set; }
-		public string LessonDate { get; set; }
-		public string LessonsType { get; set; }
-		public List<string> Marks { get; set; }
-	}
 }
