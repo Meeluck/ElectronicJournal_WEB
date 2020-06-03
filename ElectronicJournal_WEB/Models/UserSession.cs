@@ -45,13 +45,12 @@ namespace ElectronicJournal_WEB.Models
 			return _userSession;
 		}
 
-		public static UserSession Session
+		public static void LogOut()
 		{
-			get
-			{
-				return _userSession;
-			}
+			_userSession = null;
 		}
+
+		public static UserSession Session => _userSession;
 		public static int GetUserId => _userId;
 		public static string GetName => _userFullName;
 		public static string AccessLevelName => _accessLevelName;

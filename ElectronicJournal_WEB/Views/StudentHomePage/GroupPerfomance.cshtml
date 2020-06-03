@@ -9,30 +9,32 @@
 <h3>Успеваемость студентов группы @ViewBag.GroupName по @ViewBag.SubjectName</h3>
 
 
-@for (int i = 0; i < Model.Count; i++)
-{
-    <div>
-        <table border="1">
-            <tr>
-                <th></th>
-                @for (int j = 0; j < Model[i].Marks.Count; j++)
-                {
-                    <th>
-                        @Model[i].Marks[j].Date
-                        <br />@Model[i].Marks[j].LessonsType
-                    </th>
-                }
-            <tr />
-            <tr>
-                <td>@Model[i].FullName</td>
-                @for (int j = 0; j < Model[i].Marks.Count; j++)
-                {
-                    <td>@Model[i].Marks[j].Mark</td>
-                }
-            </tr>
-        </table>
-    </div>
-}
+<table border="1">
+    <tr>
+        <th></th>
+        @for (int i = 0; i < Model[0].Marks.Count; i++)
+        {
+            <th>
+                @Model[0].Marks[i].Date
+                <br />
+                @Model[0].Marks[i].LessonsType
+            </th>
+        }
+    </tr>
+
+    @for (int i = 0; i < Model.Count; i++)
+    {
+        <tr>
+            <td>@Model[i].FullName</td>
+            @for (int j = 0; j < Model[i].Marks.Count; j++)
+            {
+                <td>@Model[i].Marks[j].Mark</td>
+            }
+        </tr>
+    }
+        
+</table>
+
 
 
 

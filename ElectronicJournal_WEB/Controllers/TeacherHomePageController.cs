@@ -323,6 +323,7 @@ namespace ElectronicJournal_WEB.Controllers
                               join ap in db.AcademicPerformances on ls.LessonId equals ap.LessonId
                               where ls.SubjectId == subject.SubjectId
                               where ap.UserId == item.UserId
+                              orderby ls.Date
                               select new MarksDate
                               {
                                   Date = ls.Date.ToShortDateString(),
@@ -332,6 +333,12 @@ namespace ElectronicJournal_WEB.Controllers
             }
 
             return View(studentPerfonams);
+        }
+
+        public IActionResult LogOut()
+        {
+            UserSession.LogOut();
+            return Redirect("/Authorization/Index");
         }
 
     }

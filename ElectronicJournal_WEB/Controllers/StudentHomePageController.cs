@@ -206,5 +206,11 @@ namespace ElectronicJournal_WEB.Controllers
 
             return View(studentPerfonams);
         }
+
+        public IActionResult LogOut()
+        {
+            UserSession.LogOut();
+            return Redirect("/Authorization/Index");
+        }
     }
 }
