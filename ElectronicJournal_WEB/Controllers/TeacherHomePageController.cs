@@ -65,6 +65,7 @@ namespace ElectronicJournal_WEB.Controllers
 
             return View(lessonList);
         }
+        //выбор группы, которую хочет оценить преподаватель
         [HttpGet]
         public IActionResult StudentAssessment()
         {
@@ -87,7 +88,7 @@ namespace ElectronicJournal_WEB.Controllers
 
             return View(groups);
         }
-
+        //формируем список занятий, проведенных в данной группе
         public IActionResult GroupsLessons(int id) //на входе получаем id группы
         {
             List<IndexTeacherViewModel> lessonList = new List<IndexTeacherViewModel>();
@@ -124,10 +125,10 @@ namespace ElectronicJournal_WEB.Controllers
 
             return View(lessonList);
         }
-
+        //формируем таблицу для оценивание студентов
         public IActionResult AcademicPerfomance(int id)
         {
-            List<StudentsPerfomanceViewModel> studentsGroups;
+            List<StudentPerfomanceViewModel> studentsGroups;
             var groupName = (from ls in db.Lessons
                              join sbj in db.Subjects on ls.SubjectId equals sbj.SubjectId
                              join gr_ls in db.GroupLessons on ls.LessonId equals gr_ls.LessonId
@@ -160,7 +161,7 @@ namespace ElectronicJournal_WEB.Controllers
                                   join st_gr in db.StudentGroups on gr.GroupId equals st_gr.GroupId
                                   join us in db.Users on st_gr.UserId equals us.UserId
                                   where ls.LessonId == id
-                                  select new StudentsPerfomanceViewModel
+                                  select new StudentPerfomanceViewModel
                                   {
                                       UserId = us.UserId,
                                       LessonId = id,
@@ -175,7 +176,7 @@ namespace ElectronicJournal_WEB.Controllers
                                   join ap in db.AcademicPerformances on ls.LessonId equals ap.LessonId
                                   join us in db.Users on ap.UserId equals us.UserId
                                   where ls.LessonId == id
-                                  select new StudentsPerfomanceViewModel
+                                  select new StudentPerfomanceViewModel
                                   {
                                       UserId = us.UserId,
                                       AcademicPerformanceId=ap.AcademicPerformanceId,
@@ -188,14 +189,14 @@ namespace ElectronicJournal_WEB.Controllers
                 return View("AcademicPerfomanceUpdate",studentsGroups);
             }
         }
-
+        
         [HttpPost]
-        public IActionResult AcademicPerfomance(List<StudentsPerfomanceViewModel> studentPerfomance, string note)
+        public IActionResult AcademicPerfomance(List<StudentPerfomanceViewModel> studentPerfomance, string note)
         {
             List<AcademicPerformances> assessments = new List<AcademicPerformances>();
             Lessons lessonUpdate;
             int lessonId = 0;
-            foreach(StudentsPerfomanceViewModel item in studentPerfomance)
+            foreach(StudentPerfomanceViewModel item in studentPerfomance)
             {
                 lessonId = item.LessonId;
                 assessments.Add(new AcademicPerformances
@@ -216,13 +217,13 @@ namespace ElectronicJournal_WEB.Controllers
         }
 
         [HttpPost]
-        public IActionResult AcademicPerfomanceUpdate(List<StudentsPerfomanceViewModel> studentsPerfomances, string note)
+        public IActionResult AcademicPerfomanceUpdate(List<StudentPerfomanceViewModel> studentsPerfomances, string note)
         {
             List<AcademicPerformances> assessments = new List<AcademicPerformances>();
             Lessons lessonUpdate;
             int lessonId = 0;
 
-            foreach (StudentsPerfomanceViewModel item in studentsPerfomances)
+            foreach (StudentPerfomanceViewModel item in studentsPerfomances)
             {
                 lessonId = item.LessonId;
                 assessments.Add(new AcademicPerformances
@@ -265,7 +266,7 @@ namespace ElectronicJournal_WEB.Controllers
 
             return View(groups);
         }
-
+        //формирование списка предметов, которых ведет преподаватель у выбранной группы
         public IActionResult SelectSubject(int id)
         {
             //id - GroupId
@@ -287,6 +288,7 @@ namespace ElectronicJournal_WEB.Controllers
             return View(subjects);
         }
 
+        //Успеваемость группы
         [HttpPost]
         public IActionResult DetailGroupPerformance(SelectedSubjectViewModel subject)
         {

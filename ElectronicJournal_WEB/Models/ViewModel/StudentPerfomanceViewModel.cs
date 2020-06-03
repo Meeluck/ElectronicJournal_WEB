@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace ElectronicJournal_WEB.Models.ViewModel
 {
-	public class StudentsPerfomanceViewModel
+	public class StudentPerfomanceViewModel
 	{
 		public int UserId { get; set; }
 		public int AcademicPerformanceId { get; set; }

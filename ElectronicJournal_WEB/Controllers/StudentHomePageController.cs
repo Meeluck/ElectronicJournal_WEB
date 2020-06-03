@@ -70,7 +70,7 @@ namespace ElectronicJournal_WEB.Controllers
                           }).ToList();
             return View(lessonList);
         }
-
+        //личная успеваемость студента по всем предметам
         public IActionResult StudentPerfomance()
         {
             ViewBag.AccessLevelId = UserSession.AccessLevelId;
@@ -107,6 +107,7 @@ namespace ElectronicJournal_WEB.Controllers
                               join ap in db.AcademicPerformances on ls.LessonId equals ap.LessonId
                               where ls.SubjectId == item.SubjectId
                               where ap.UserId == UserSession.GetUserId
+                              orderby ls.Date
                               select new MarksDateNote
                               {
                                   Mark = ap.Mark,
@@ -117,6 +118,7 @@ namespace ElectronicJournal_WEB.Controllers
             }
             return View(perfomances);
         }
+        //выбор предмета, для просмотра успеваемости всей группы
         public IActionResult SubjectSelection()
         {
             ViewBag.AccessLevelId = UserSession.AccessLevelId;
@@ -145,6 +147,7 @@ namespace ElectronicJournal_WEB.Controllers
 
             return View(subjects);
         }
+        //успеваемость группы по выбранному предмету
         public IActionResult GroupPerfomance(int id)
         {
             ViewBag.AccessLevelId = UserSession.AccessLevelId;
@@ -195,6 +198,7 @@ namespace ElectronicJournal_WEB.Controllers
                               join ap in db.AcademicPerformances on ls.LessonId equals ap.LessonId
                               where ls.SubjectId == id
                               where ap.UserId == item.UserId
+                              orderby ls.Date
                               select new MarksDate
                               {
                                   Date = ls.Date.ToShortDateString(),
